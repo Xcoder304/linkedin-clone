@@ -18,10 +18,14 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { IoPersonAddSharp, IoSettingsSharp } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../Redux/features/userSlice";
 
 import "../../style/header.css";
 
 const Header = () => {
+  const user = useSelector(selectUser);
+
   const [openMenu, setMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -88,7 +92,7 @@ const Header = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              <Avatar alt={user?.displayName} src={user?.photoURL}></Avatar>
             </IconButton>
           </Tooltip>
         </Box>
@@ -128,7 +132,7 @@ const Header = () => {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
           <MenuItem>
-            <Avatar /> Profile
+            <Avatar src={user?.photoURL} /> {user?.displayName}
           </MenuItem>
           <Divider />
           <MenuItem>

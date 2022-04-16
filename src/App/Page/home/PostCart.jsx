@@ -26,12 +26,11 @@ const PostCart = () => {
         </div>
 
         <div className="postcard__file">
-          {/* <img
+          <img
             src="https://media-exp1.licdn.com/dms/image/sync/C4D22AQGrui6YruHA2w/feedshare-shrink_800/0/1648141321044?e=2147483647&v=beta&t=_HhyQmQoYnNPqeRnZqvtwKQGsoQThl6ACoeog0hSsHA"
-          className="file_image"
-           
-          /> */}
-          <ReactPlayer
+            className="file_image"
+          />
+          {/* <ReactPlayer
             url="https://www.youtube.com/watch?v=RDV3Z1KCBvo&t=401s"
             className="file_video"
             controls
@@ -39,7 +38,7 @@ const PostCart = () => {
             loop={false}
             muted={true}
             autoplay={true}
-          />
+          /> */}
         </div>
 
         <div className="postcard__status">

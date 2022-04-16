@@ -23,9 +23,9 @@ body {
   --FontlightBlack: rgba(0, 0, 0, 0.9);
   --FontlightBlack-x2: rgba(0, 0, 0, 0.784);
   --FontlightBlack-x3: rgba(0, 0, 0, 0.6);
-
   --blue: #0a66c2;
   --Darkblue: #044f9b;
+  --Darkblue-x2: #004182;
 }
 html {
   scroll-behavior: smooth;

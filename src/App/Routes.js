@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "./components/header/Header";
 import Home from "./Page/home/Home";
+import CreatePostModal from "./Page/home/CreatePostModal";
+import Login from "./components/Login";
 import { Routes, Route } from "react-router-dom";
 
 const AllRoutes = () => {
@@ -16,11 +18,28 @@ const AllRoutes = () => {
         }
       />
       <Route
+        path="/createpost"
+        element={
+          <>
+            <CreatePostModal />
+            <Header />
+            <Home />
+          </>
+        }
+      />
+      {/* <Route
+        path="/login"
+        element={
+          <>
+            <Login />
+          </>
+        }
+      /> */}
+      <Route
         path="/mynetwork"
         element={
           <>
             <Header />
-            <Home />
           </>
         }
       />{" "}
@@ -29,7 +48,6 @@ const AllRoutes = () => {
         element={
           <>
             <Header />
-            <Home />
           </>
         }
       />{" "}
@@ -38,7 +56,6 @@ const AllRoutes = () => {
         element={
           <>
             <Header />
-            <Home />
           </>
         }
       />
@@ -47,7 +64,6 @@ const AllRoutes = () => {
         element={
           <>
             <Header />
-            <Home />
           </>
         }
       />
