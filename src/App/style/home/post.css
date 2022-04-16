@@ -1,0 +1,105 @@
+.Post {
+  width: 100%;
+  margin-top: 20px;
+}
+.postcard {
+  width: 100%;
+  margin: 20px 0;
+  background: var(--white);
+  border: none;
+  border-radius: 9px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  position: sticky;
+}
+.postcard__top {
+  width: 100%;
+}
+.postcard__userinfo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 18px;
+}
+.postcard__userinfo > span {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.postcard__userinfo > span h5 {
+  font-size: 0.9rem;
+  color: var(--FontlightBlack-x2);
+  font-weight: 600;
+  cursor: pointer;
+}
+.postcard__userinfo > span h5:hover {
+  text-decoration: underline !important;
+  text-decoration-color: var(--blue) !important;
+  color: var(--blue);
+}
+.postcard__userinfo > span p {
+  font-size: 0.8rem;
+  width: 100%;
+  text-align: left;
+  color: var(--FontlightBlack-x3);
+}
+.postcard__caption {
+  padding: 4px 15px;
+  width: 100%;
+}
+.postcard__caption p {
+  width: 100%;
+  color: var(--FontlightBlack-x3);
+  font-size: 0.8rem;
+}
+.postcard__file {
+  width: 100%;
+  height: auto;
+}
+.postcard__file .file_image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.file_video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+}
+.postcard__status {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 17px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.postcard__status span {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.postcard__status span > p {
+  color: var(--FontlightBlack-x2);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.postcard__status span:hover {
+  text-decoration: underline !important;
+  text-decoration-color: var(--FontlightBlack-x3) !important;
+}
+.postcard .postcard__options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 4px 6px 10px;
+}
+.option .icon {
+  color: var(--FontlightBlack-x2);
+  font-size: 1.2rem;
+}
+.option span {
+  color: var(--FontlightBlack-x2);
+  font-size: 1rem;
+}
