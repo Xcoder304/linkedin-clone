@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  text-decoration: none !important;
+  list-style: none;
+}
+body {
+  overflow-x: hidden;
+  font-family: "Sora", sans-serif;
+
+  /* colors */
+  --white: #ffffff;
+  --samiwhite: #f3f2ef;
+  --Superlightwhite: #eef3f8;
+  --lightGray: rgba(235, 235, 235, 1);
+
+  /* fonts */
+  --Fontblack: #191919;
+  --FontlightBlack: rgba(0, 0, 0, 0.9);
+  --FontlightBlack-x2: rgba(0, 0, 0, 0.784);
+  --FontlightBlack-x3: rgba(0, 0, 0, 0.6);
+
+  --blue: #0a66c2;
+  --Darkblue: #044f9b;
+}
+html {
+  scroll-behavior: smooth;
+}
+.d_f {
+  display: flex !important;
+}
+.d_f-js_c {
+  display: flex !important;
+  justify-content: center !important;
+}
+.d_f-js_c-ali_c {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center;
+}
+.d_f-js_sp {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+.d_f-js_sp-ali_c {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center;
+}
+.d_f-ali_c {
+  display: flex;
+  align-items: center;
+}
+.w_100 {
+  width: 100% !important;
+}
