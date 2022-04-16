@@ -7,9 +7,9 @@ import UserInfo from "./UserInfo";
 const Home = () => {
   return (
     <div class="home">
-      {/* <UserInfo /> */}
+      <UserInfo />
       <Feeds />
-      {/* <RightSec /> */}
+      <RightSec />
     </div>
   );
 };
