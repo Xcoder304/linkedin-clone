@@ -6,7 +6,7 @@ import UserInfo from "./UserInfo";
 
 const Home = () => {
   return (
-    <div class="home">
+    <div className="home">
       <UserInfo />
       <Feeds />
       <RightSec />

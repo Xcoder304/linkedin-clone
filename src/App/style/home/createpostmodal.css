@@ -11,9 +11,16 @@
 .createpostmodal__card {
   width: 80vw;
   max-width: 600px;
+  height: 40vh;
+  max-height: 450px;
   background: var(--white);
   border: none;
   border-radius: 5px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.createpostmodal__card.active {
+  height: 80vh;
 }
 .createpostmodal__top {
   width: 100%;
@@ -129,6 +136,7 @@
   font-size: 1.3rem;
   color: var(--FontlightBlack-x2);
   text-transform: uppercase;
+  z-index: 50;
 }
 .seleteImage h5::before {
   position: absolute;
@@ -139,6 +147,7 @@
   top: 50%;
   transform: translateY(-50%);
   left: 0;
+  z-index: 10;
 }
 
 .seleteImage h5::after {
@@ -150,6 +159,7 @@
   top: 50%;
   transform: translateY(-50%);
   right: 0;
+  z-index: 10;
 }
 .selete__imageBtn {
   display: block;
@@ -165,9 +175,9 @@
   margin: 0 auto;
 }
 .seleteimage__imagewapper {
-  width: 70%;
-  margin: 0 auto;
-  height: 150px;
+  width: 100%;
+  margin: 5px auto;
+  height: 300px;
 }
 .seleteimage__imagewapper img {
   width: 100%;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import Avatar from "@mui/material/Avatar";
 import { MdPhotoLibrary } from "react-icons/md";
@@ -6,7 +6,6 @@ import { AiFillYoutube } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../Redux/features/userSlice";
-import { selectFileType, setThefileType } from "../../Redux/features/Filetype";
 import { db, storage } from "../../backend/firebase/config";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -16,7 +15,7 @@ import "../../style/home/createpostmodal.css";
 const CreatePostModal = () => {
   // for getting the user info
   const user = useSelector(selectUser);
-  const filetype = useSelector(selectFileType);
+
   // for dispatching the funtion in redux store
   const dispatch = useDispatch();
 
@@ -26,111 +25,17 @@ const CreatePostModal = () => {
 
   // for getting the user data
   let [userCaption, setuserCaption] = useState("");
-  let [ShareFile, setShareFile] = useState(null);
-  let [CurrentFileType, setCurrentFileType] = useState(null);
+  let [shareImage, setShareImage] = useState(null);
 
   // for navigating the user
   const navigate = useNavigate();
 
-  const GetTheFile = (e) => {
-    let file = e.target.files[0];
-    if (file) {
-      setShareFile(file);
+  const GetTheImage = (e) => {
+    let image = e.target.files[0];
+    if (image) {
+      setShareImage(image);
     } else {
-      alert(`sorry we cant upload ${file.type} format right now`);
-    }
-  };
-
-  useEffect(() => {
-    if (ShareFile) {
-      if (
-        ShareFile.type == "image/jpeg" ||
-        ShareFile.type == "image/gif" ||
-        ShareFile.type == "image/jpg" ||
-        ShareFile.type == "image/png"
-      ) {
-        dispatch(
-          setThefileType({
-            FileType: "image",
-          })
-        );
-        setCurrentFileType("image");
-      }
-      if (ShareFile.type == "video/mp4") {
-        dispatch(
-          setThefileType({
-            FileType: "video",
-          })
-        );
-        setCurrentFileType("video");
-      }
-    }
-  }, [ShareFile]);
-
-  const UploadImage = () => {
-    const storageRef = ref(storage, `images/${ShareFile.name}`);
-    const UploadImageTask = uploadBytesResumable(storageRef, ShareFile);
-
-    UploadImageTask.on(
-      "state_changed",
-      (snapshot) => {
-        console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      },
-      (err) => {
-        alert(err.message);
-      },
-      () => {
-        getDownloadURL(UploadImageTask.snapshot.ref).then((url) => {
-          addDoc(collection(db, "posts"), {
-            username: user?.displayName,
-            userprofile: user?.photoURL,
-            time: serverTimestamp(),
-            filetype: filetype.FileType,
-            file: url,
-            caption: userCaption,
-          });
-        });
-        navigate("/");
-        setuserCaption("");
-      }
-    );
-  };
-
-  const UploadVideo = () => {
-    const storageRef = ref(storage, `video/${ShareFile.name}`);
-    const UploadVideoTask = uploadBytesResumable(storageRef, ShareFile);
-
-    UploadVideoTask.on(
-      "state_changed",
-      (snapshot) => {
-        console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      },
-      (err) => {
-        alert(err.message);
-      },
-      () => {
-        getDownloadURL(UploadVideoTask.snapshot.ref).then((url) => {
-          addDoc(collection(db, "posts"), {
-            username: user?.displayName,
-            userprofile: user?.photoURL,
-            time: serverTimestamp(),
-            filetype: filetype.FileType,
-            file: url,
-            caption: userCaption,
-          });
-        });
-        navigate("/");
-        setuserCaption("");
-      }
-    );
-  };
-
-  const handlePost = () => {
-    if (CurrentFileType == "image") {
-      UploadImage();
-    }
-    if (CurrentFileType == "video") {
-      UploadVideo();
+      alert(`sorry we cant upload ${image.type} format right now`);
     }
   };
 
@@ -138,7 +43,7 @@ const CreatePostModal = () => {
     <div className="createpostmodal">
       <div
         className={`createpostmodal__card ${
-          ShareFile
+          shareImage
             ? "active"
             : openSeleteImage
             ? "active"
@@ -178,18 +83,18 @@ const CreatePostModal = () => {
               <label htmlFor="image" className="selete__imageBtn">
                 selete an image
               </label>
-              {CurrentFileType == "image" && (
+              {shareImage && (
                 <div className="seleteimage__imagewapper">
-                  <img src={URL.createObjectURL(ShareFile)} />
+                  <img src={URL.createObjectURL(shareImage)} />
                 </div>
               )}
-              <h4 style={{ marginTop: "7px" }}>{ShareFile?.name}</h4>
+              {/* <h4 style={{ marginTop: "7px" }}>{image?.name}</h4> */}
               <input
                 type="file"
                 id="image"
                 style={{ visibility: "hidden" }}
                 accept="image/*"
-                onChange={GetTheFile}
+                onChange={GetTheImage}
               />
             </div>
           )}
@@ -210,7 +115,6 @@ const CreatePostModal = () => {
                   id="video"
                   accept="video/*"
                   style={{ visibility: "hidden" }}
-                  onChange={GetTheFile}
                 />
               </div>
             </>
@@ -238,9 +142,7 @@ const CreatePostModal = () => {
               <p>video</p>
             </span>
           </div>
-          <button className="createpostmodal__postBtn" onClick={handlePost}>
-            post
-          </button>
+          <button className="createpostmodal__postBtn">post</button>
         </div>
       </div>
     </div>

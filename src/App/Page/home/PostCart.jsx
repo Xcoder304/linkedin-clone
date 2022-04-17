@@ -6,39 +6,48 @@ import { FaShare } from "react-icons/fa";
 import { RiSendPlaneFill } from "react-icons/ri";
 import ReactPlayer from "react-player";
 
-const PostCart = () => {
+const PostCart = ({
+  id,
+  caption,
+  file,
+  filetype,
+  username,
+  userprofile,
+  time,
+}) => {
   return (
     <div className="postcard">
       <div className="postcard__top">
         <div className="postcard__userinfo">
-          <Avatar alt="Remy Sharp" src="/broken-image.jpg"></Avatar>
+          <Avatar alt={username} src={userprofile}></Avatar>
           <span>
-            <h5>Name</h5>
-            <p>Date</p>
+            <h5>{username}</h5>
+            <p>{new Date(time?.toDate()).toLocaleDateString()}</p>
           </span>
         </div>
 
         <div className="postcard__caption">
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi,
-            laudantium!
-          </p>
+          <p>{caption}</p>
         </div>
 
         <div className="postcard__file">
-          <img
-            src="https://media-exp1.licdn.com/dms/image/sync/C4D22AQGrui6YruHA2w/feedshare-shrink_800/0/1648141321044?e=2147483647&v=beta&t=_HhyQmQoYnNPqeRnZqvtwKQGsoQThl6ACoeog0hSsHA"
-            className="file_image"
-          />
-          {/* <ReactPlayer
-            url="https://www.youtube.com/watch?v=RDV3Z1KCBvo&t=401s"
-            className="file_video"
-            controls
-            playing={true}
-            loop={false}
-            muted={true}
-            autoplay={true}
-          /> */}
+          {filetype == "image" ? (
+            <img src={file} className="file_image" />
+          ) : filetype == "video" ? (
+            <ReactPlayer
+              url={file}
+              className="file_video"
+              controls
+              playing={true}
+              loop={false}
+              muted={true}
+              autoplay={true}
+            />
+          ) : (
+            ""
+          )}
+
+          {/*  */}
         </div>
 
         <div className="postcard__status">

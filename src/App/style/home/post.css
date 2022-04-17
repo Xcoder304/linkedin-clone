@@ -30,6 +30,8 @@
   color: var(--FontlightBlack-x2);
   font-weight: 600;
   cursor: pointer;
+  text-align: left;
+  width: 100%;
 }
 .postcard__userinfo > span h5:hover {
   text-decoration: underline !important;
