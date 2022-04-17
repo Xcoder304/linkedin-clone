@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../Redux/features/userSlice";
 import { selectFileType, setThefileType } from "../../Redux/features/Filetype";
+import { setTheLoading } from "../../Redux/features/Loading";
 import { db, storage } from "../../backend/firebase/config";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -17,6 +18,7 @@ const CreatePostModal = () => {
   // for getting the user info
   const user = useSelector(selectUser);
   const filetype = useSelector(selectFileType);
+
   // for dispatching the funtion in redux store
   const dispatch = useDispatch();
 
@@ -68,6 +70,11 @@ const CreatePostModal = () => {
   }, [ShareFile]);
 
   const UploadImage = () => {
+    dispatch(
+      setTheLoading({
+        Loading: true,
+      })
+    );
     const storageRef = ref(storage, `images/${ShareFile.name}`);
     const UploadImageTask = uploadBytesResumable(storageRef, ShareFile);
 
@@ -90,13 +97,22 @@ const CreatePostModal = () => {
             caption: userCaption,
           });
         });
-        navigate("/");
+        dispatch(
+          setTheLoading({
+            Loading: false,
+          })
+        );
         setuserCaption("");
       }
     );
   };
 
   const UploadVideo = () => {
+    dispatch(
+      setTheLoading({
+        Loading: true,
+      })
+    );
     const storageRef = ref(storage, `video/${ShareFile.name}`);
     const UploadVideoTask = uploadBytesResumable(storageRef, ShareFile);
 
@@ -119,7 +135,11 @@ const CreatePostModal = () => {
             caption: userCaption,
           });
         });
-        navigate("/");
+        dispatch(
+          setTheLoading({
+            Loading: false,
+          })
+        );
         setuserCaption("");
       }
     );
@@ -127,9 +147,11 @@ const CreatePostModal = () => {
 
   const handlePost = () => {
     if (CurrentFileType == "image") {
+      navigate("/");
       UploadImage();
     }
     if (CurrentFileType == "video") {
+      navigate("/");
       UploadVideo();
     }
   };
