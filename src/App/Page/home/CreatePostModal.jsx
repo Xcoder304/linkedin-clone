@@ -7,7 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../Redux/features/userSlice";
 import { selectFileType, setThefileType } from "../../Redux/features/Filetype";
-import { setTheLoading } from "../../Redux/features/Loading";
+import {
+  setTheLoadingToFalse,
+  setTheLoadingToTrue,
+} from "../../Redux/features/Loading";
 import { db, storage } from "../../backend/firebase/config";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -30,6 +33,7 @@ const CreatePostModal = () => {
   let [userCaption, setuserCaption] = useState("");
   let [ShareFile, setShareFile] = useState(null);
   let [CurrentFileType, setCurrentFileType] = useState(null);
+  let [imageURL, SetImageURL] = useState("");
 
   // for navigating the user
   const navigate = useNavigate();
@@ -70,14 +74,9 @@ const CreatePostModal = () => {
   }, [ShareFile]);
 
   const UploadImage = () => {
-    dispatch(
-      setTheLoading({
-        Loading: true,
-      })
-    );
+    dispatch(setTheLoadingToTrue());
     const storageRef = ref(storage, `images/${ShareFile.name}`);
     const UploadImageTask = uploadBytesResumable(storageRef, ShareFile);
-
     UploadImageTask.on(
       "state_changed",
       (snapshot) => {
@@ -97,22 +96,14 @@ const CreatePostModal = () => {
             caption: userCaption,
           });
         });
-        dispatch(
-          setTheLoading({
-            Loading: false,
-          })
-        );
+        dispatch(setTheLoadingToFalse());
         setuserCaption("");
       }
     );
   };
 
   const UploadVideo = () => {
-    dispatch(
-      setTheLoading({
-        Loading: true,
-      })
-    );
+    dispatch(setTheLoadingToTrue());
     const storageRef = ref(storage, `video/${ShareFile.name}`);
     const UploadVideoTask = uploadBytesResumable(storageRef, ShareFile);
 
@@ -135,11 +126,8 @@ const CreatePostModal = () => {
             caption: userCaption,
           });
         });
-        dispatch(
-          setTheLoading({
-            Loading: false,
-          })
-        );
+        dispatch(setTheLoadingToFalse());
+
         setuserCaption("");
       }
     );
@@ -194,17 +182,27 @@ const CreatePostModal = () => {
           {openSeleteImage && (
             <div className="seleteImage">
               <h5>Upload Image</h5>
-              <input type="text" placeholder="Add The Image Url" />
+              <input
+                type="text"
+                placeholder="Add The Image Url"
+                onChange={(e) => SetImageURL(e.target.value)}
+                value={imageURL}
+              />
               <h5>or</h5>
 
               <label htmlFor="image" className="selete__imageBtn">
                 selete an image
               </label>
-              {CurrentFileType == "image" && (
+              {(CurrentFileType == "image" && (
                 <div className="seleteimage__imagewapper">
                   <img src={URL.createObjectURL(ShareFile)} />
                 </div>
-              )}
+              )) ||
+                (imageURL && (
+                  <div className="seleteimage__imagewapper">
+                    <img src={imageURL} />
+                  </div>
+                ))}
               <h4 style={{ marginTop: "7px" }}>{ShareFile?.name}</h4>
               <input
                 type="file"
@@ -226,7 +224,7 @@ const CreatePostModal = () => {
                 <label htmlFor="video" className="selete__imageBtn">
                   selete an video
                 </label>
-                {/* <h4 style={{ marginTop: "7px" }}>{video?.name}</h4> */}
+                <h4 style={{ marginTop: "7px" }}>{ShareFile?.name}</h4>
                 <input
                   type="file"
                   id="video"

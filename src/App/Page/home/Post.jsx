@@ -22,7 +22,7 @@ const Post = () => {
 
   return (
     <div className="Post">
-      {loading.Loading && (
+      {loading && (
         <div className="loader">
           <img src="../images/loader.gif" />
         </div>

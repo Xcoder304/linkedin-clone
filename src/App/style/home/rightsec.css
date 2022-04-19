@@ -1,5 +1,6 @@
 .rightsec {
   flex: 0.2;
+  position: relative;
 }
 .rightsec__top {
   padding: 10px 7px;
@@ -67,9 +68,6 @@
   border-radius: 9px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   padding: 6px;
-  position: sticky;
-  top: 30%;
-  right: 0;
 }
 .rightsec__image .img {
   width: 100%;

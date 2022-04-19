@@ -12,8 +12,8 @@ import "./style/app.css";
 const App = () => {
   const user = useSelector(selectUser);
   const loading = useSelector(selectLoading);
-
   const dispatch = useDispatch();
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {

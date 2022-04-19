@@ -8,13 +8,17 @@ export const LoadingSlice = createSlice({
   name: "Loading",
   initialState,
   reducers: {
-    setTheLoading: (state, action) => {
-      state.Loading = action.payload;
+    setTheLoadingToFalse: (state, action) => {
+      state.Loading = false;
+    },
+    setTheLoadingToTrue: (state, action) => {
+      state.Loading = true;
     },
   },
 });
 
-export const { setTheLoading } = LoadingSlice.actions;
+export const { setTheLoadingToFalse, setTheLoadingToTrue } =
+  LoadingSlice.actions;
 
 export const selectLoading = (state) => state.Loading.Loading;
 
