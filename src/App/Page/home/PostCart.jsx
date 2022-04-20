@@ -1,10 +1,13 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import { GrLike } from "react-icons/gr";
 import { MdOutlineComment } from "react-icons/md";
 import { FaShare } from "react-icons/fa";
 import { RiSendPlaneFill } from "react-icons/ri";
 import ReactPlayer from "react-player";
+import Comments from "./Comments";
+import { db } from "../../backend/firebase/config";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 const PostCart = ({
   id,
@@ -15,6 +18,16 @@ const PostCart = ({
   userprofile,
   time,
 }) => {
+  const [OpenComments, setOpenComments] = useState(false);
+  const [TotalComments, setTotalComments] = useState([]);
+
+  // getting all comments
+  useEffect(() => {
+    onSnapshot(query(collection(db, "posts", id, "comments")), (snapshot) => {
+      setTotalComments(snapshot.docs);
+    });
+  }, [OpenComments]);
+
   return (
     <div className="postcard">
       <div className="postcard__top">
@@ -56,7 +69,7 @@ const PostCart = ({
             <p>likes</p>
           </span>
           <span>
-            <p>40</p>
+            <p>{TotalComments.length}</p>
             <p>comments</p>
           </span>
         </div>
@@ -67,7 +80,10 @@ const PostCart = ({
             <span>like</span>
           </div>
 
-          <div className="option">
+          <div
+            className="option"
+            onClick={() => setOpenComments(!OpenComments)}
+          >
             <MdOutlineComment className="icon" />
             <span>comments</span>
           </div>
@@ -82,6 +98,7 @@ const PostCart = ({
             <span>send</span>
           </div>
         </div>
+        {OpenComments && <Comments id={id} />}
       </div>
     </div>
   );
