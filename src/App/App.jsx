@@ -23,6 +23,7 @@ const App = () => {
       }
     });
 
+    // cleanup funtion
     return () => unsub();
   }, [auth]);
 
