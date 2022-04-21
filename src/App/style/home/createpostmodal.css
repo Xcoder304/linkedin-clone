@@ -4,14 +4,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
+  position: absolute;
   background: rgba(64, 64, 64, 0.6);
   z-index: 400;
 }
 .createpostmodal__card {
-  width: 80vw;
+  width: 97vw !important;
   max-width: 600px;
-  height: 40vh;
+  height: 50vh;
   max-height: 450px;
   background: var(--white);
   border: none;
@@ -180,6 +180,17 @@
   height: 300px;
 }
 .seleteimage__imagewapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.seletevideo__videowapper {
+  width: 100%;
+  margin: 5px auto;
+  height: 300px;
+}
+.seletevideo__videowapper .video {
   width: 100%;
   height: 100%;
   object-fit: contain;

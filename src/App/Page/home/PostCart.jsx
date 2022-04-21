@@ -83,10 +83,10 @@ const PostCart = ({
               url={file}
               className="file_video"
               controls
-              // playing={true}
+              playing={true}
               loop={false}
               muted={true}
-              autoPlay={true}
+              width="97%"
             />
           ) : (
             ""

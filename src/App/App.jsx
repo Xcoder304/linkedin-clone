@@ -26,8 +26,6 @@ const App = () => {
     return () => unsub();
   }, [auth]);
 
-  console.log(loading);
-
   return (
     <Router>
       <div className="app">{user ? <AllRoutes /> : <Login />}</div>

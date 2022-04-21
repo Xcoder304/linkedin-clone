@@ -14,6 +14,7 @@ import {
 import { db, storage } from "../../backend/firebase/config";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import ReactPlayer from "react-player";
 
 import "../../style/home/createpostmodal.css";
 
@@ -31,9 +32,10 @@ const CreatePostModal = () => {
 
   // for getting the user data
   let [userCaption, setuserCaption] = useState("");
-  let [ShareFile, setShareFile] = useState(null);
-  let [CurrentFileType, setCurrentFileType] = useState(null);
-  let [imageURL, SetImageURL] = useState("");
+  const [ShareFile, setShareFile] = useState(null);
+  const [CurrentFileType, setCurrentFileType] = useState(null);
+  const [imageURL, SetImageURL] = useState("");
+  const [videoURL, SetvideoURL] = useState("");
 
   // for navigating the user
   const navigate = useNavigate();
@@ -136,11 +138,38 @@ const CreatePostModal = () => {
   const handlePost = () => {
     if (CurrentFileType == "image") {
       navigate("/");
-      UploadImage();
+      if (ShareFile) {
+        UploadImage();
+      }
     }
+    // uploading image with url
+    if (imageURL) {
+      navigate("/");
+      addDoc(collection(db, "posts"), {
+        username: user?.displayName,
+        userprofile: user?.photoURL,
+        time: serverTimestamp(),
+        filetype: "image",
+        file: imageURL,
+        caption: userCaption,
+      });
+    }
+
     if (CurrentFileType == "video") {
       navigate("/");
       UploadVideo();
+    }
+    // uploading video with url
+    if (videoURL) {
+      navigate("/");
+      addDoc(collection(db, "posts"), {
+        username: user?.displayName,
+        userprofile: user?.photoURL,
+        time: serverTimestamp(),
+        filetype: "video",
+        file: videoURL,
+        caption: userCaption,
+      });
     }
   };
 
@@ -219,11 +248,40 @@ const CreatePostModal = () => {
             <>
               <div className="seleteImage">
                 <h5>Upload video</h5>
-                <input type="text" placeholder="Add The Video Url" />
+                <input
+                  type="text"
+                  placeholder="Add The Video Url"
+                  value={videoURL}
+                  onChange={(e) => SetvideoURL(e.target.value)}
+                />
                 <h5>or</h5>
                 <label htmlFor="video" className="selete__imageBtn">
                   selete an video
                 </label>
+                {(CurrentFileType == "video" && (
+                  <div className="seletevideo__videowapper">
+                    <ReactPlayer
+                      url={URL.createObjectURL(ShareFile)}
+                      controls
+                      loop={false}
+                      muted={true}
+                      playing={true}
+                      className="video"
+                    />
+                  </div>
+                )) ||
+                  (videoURL && (
+                    <div className="seletevideo__videowapper">
+                      <ReactPlayer
+                        url={videoURL}
+                        controls
+                        loop={false}
+                        muted={true}
+                        playing={true}
+                        className="video"
+                      />
+                    </div>
+                  ))}
                 <h4 style={{ marginTop: "7px" }}>{ShareFile?.name}</h4>
                 <input
                   type="file"
