@@ -13,13 +13,14 @@
 .header__left {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
-.header__logo {
-  width: 60px;
+.header__left > .header__logo {
+  width: 40px !important;
   height: 40px;
 }
-.header__logo img {
+.header__logo > img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -91,8 +92,8 @@
   color: var(--Fontblack) !important;
 }
 .hamburgarMenu {
-  width: 34px;
-  height: 30px;
+  width: 24px;
+  height: 20px;
   cursor: pointer;
   display: none;
 }

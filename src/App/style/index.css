@@ -59,3 +59,27 @@ html {
 .w_100 {
   width: 100% !important;
 }
+
+@media (min-width: 320px) {
+  html {
+    font-size: 58% !important;
+  }
+}
+
+@media (min-width: 600px) {
+  html {
+    font-size: 67% !important;
+  }
+}
+
+@media (min-width: 1100px) {
+  html {
+    font-size: 78% !important;
+  }
+}
+
+@media (min-width: 1250px) {
+  html {
+    font-size: 100% !important;
+  }
+}
