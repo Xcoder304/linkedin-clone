@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import { GrLike } from "react-icons/gr";
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { MdOutlineComment } from "react-icons/md";
 import { FaShare } from "react-icons/fa";
 import { RiSendPlaneFill } from "react-icons/ri";
 import ReactPlayer from "react-player";
 import Comments from "./Comments";
 import { db } from "../../backend/firebase/config";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../Redux/features/userSlice";
+import {
+  collection,
+  onSnapshot,
+  query,
+  setDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 const PostCart = ({
   id,
@@ -18,8 +27,11 @@ const PostCart = ({
   userprofile,
   time,
 }) => {
+  const user = useSelector(selectUser);
   const [OpenComments, setOpenComments] = useState(false);
   const [TotalComments, setTotalComments] = useState([]);
+  const [TotalLikes, setTotalLikes] = useState([]);
+  const [hasLiked, sethasLiked] = useState(false);
 
   // getting all comments
   useEffect(() => {
@@ -27,6 +39,26 @@ const PostCart = ({
       setTotalComments(snapshot.docs);
     });
   }, [OpenComments]);
+
+  useEffect(() => {
+    onSnapshot(query(collection(db, "posts", id, "likes")), (snapshot) => {
+      setTotalLikes(snapshot.docs.map((data) => data));
+    });
+  }, []);
+
+  useEffect(() => {
+    sethasLiked(TotalLikes.findIndex((like) => like?.id == user?.uid) != -1);
+  });
+
+  const LikeThePost = async () => {
+    if (hasLiked) {
+      deleteDoc(doc(db, "posts", id, "likes", user?.uid));
+    } else {
+      await setDoc(doc(db, "posts", id, "likes", user?.uid), {
+        username: user?.displayName,
+      });
+    }
+  };
 
   return (
     <div className="postcard">
@@ -65,7 +97,7 @@ const PostCart = ({
 
         <div className="postcard__status">
           <span>
-            <p>10</p>
+            <p>{TotalLikes.length}</p>
             <p>likes</p>
           </span>
           <span>
@@ -75,8 +107,12 @@ const PostCart = ({
         </div>
 
         <div className="postcard__options">
-          <div className="option">
-            <GrLike className="icon" />
+          <div className="option" onClick={LikeThePost}>
+            {hasLiked ? (
+              <AiFillLike className="icon active" />
+            ) : (
+              <AiOutlineLike className="icon" />
+            )}
             <span>like</span>
           </div>
 
